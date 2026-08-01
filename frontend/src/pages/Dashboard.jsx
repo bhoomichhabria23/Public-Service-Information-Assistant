@@ -1,13 +1,16 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaBookmark,
-  FaRegLightbulb,
   FaArrowRight,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import AuthContext from "../context/AuthContext";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
+  const savedSchemes = auth?.user?.savedSchemes ?? [];
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -24,11 +27,7 @@ function Dashboard() {
 
               <h1 className="text-4xl font-bold text-slate-900 mt-2">
                 Welcome Back,
-                <span className="text-blue-900">
-                  {" "}
-                  {auth?.user?.name || "User"}
-                </span>{" "}
-                👋
+                <span className="text-blue-900"> {auth?.user?.name || "User"}</span>
               </h1>
 
               <p className="text-slate-600 mt-5 text-lg leading-8">
@@ -38,11 +37,6 @@ function Dashboard() {
               </p>
             </div>
 
-            <div className="hidden lg:flex items-center justify-center">
-              <div className="w-52 h-52 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
-                <FaRegLightbulb className="text-7xl text-blue-700" />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -59,25 +53,59 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="border-2 border-dashed border-slate-200 rounded-3xl py-16 flex flex-col items-center">
-            <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center">
-              <FaBookmark className="text-5xl text-blue-700" />
+          {savedSchemes.length === 0 ? (
+            <div className="border-2 border-dashed border-slate-200 rounded-3xl py-16 flex flex-col items-center">
+              <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center">
+                <FaBookmark className="text-5xl text-blue-700" />
+              </div>
+
+              <h3 className="text-2xl font-semibold mt-6 text-slate-900">
+                No Saved Schemes Yet
+              </h3>
+
+              <p className="text-slate-500 text-center mt-3 max-w-md">
+                Browse government schemes and bookmark your favourites for quick
+                access from your dashboard.
+              </p>
+
+              <button
+                onClick={() => navigate("/schemes")}
+                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-blue-900 px-6 py-3 text-white font-medium hover:bg-blue-800 transition"
+              >
+                Browse Schemes
+                <FaArrowRight />
+              </button>
             </div>
+          ) : (
+            <div className="grid xl:grid-cols-3 lg:grid-cols-2 gap-6">
+              {savedSchemes.map((scheme) => (
+                <div
+                  key={scheme.id}
+                  className="bg-slate-50 rounded-3xl border border-slate-200 p-6 shadow-sm"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-4xl">{scheme.icon}</div>
+                    <span className="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700 text-sm">
+                      {scheme.category}
+                    </span>
+                  </div>
 
-            <h3 className="text-2xl font-semibold mt-6 text-slate-900">
-              No Saved Schemes Yet
-            </h3>
+                  <h3 className="text-xl font-bold mt-5 text-slate-900">
+                    {scheme.name}
+                  </h3>
 
-            <p className="text-slate-500 text-center mt-3 max-w-md">
-              Browse government schemes and bookmark your favourites for quick
-              access from your dashboard.
-            </p>
+                  <p className="text-slate-500 mt-3 leading-7">
+                    {scheme.desc}
+                  </p>
 
-            <button className="mt-8 inline-flex items-center gap-2 rounded-xl bg-blue-900 px-6 py-3 text-white font-medium hover:bg-blue-800 transition">
-              Browse Schemes
-              <FaArrowRight />
-            </button>
-          </div>
+                  <div className="mt-5 flex items-center gap-2 text-gray-500">
+                    <FaMapMarkerAlt />
+                    <span>{scheme.location}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="mt-10">
           <div className="mb-6">

@@ -9,15 +9,63 @@ export function AuthProvider({ children }) {
   });
 
   const login = ({ token, user }) => {
+    const preservedSaved = auth.user?.savedSchemes ?? [];
+    const nextUser = {
+      ...user,
+      savedSchemes: user.savedSchemes ?? preservedSaved,
+    };
+
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-    setAuth({ token, user });
+    localStorage.setItem("user", JSON.stringify(nextUser));
+    setAuth({ token, user: nextUser });
   };
 
   const updateUser = (updates) => {
+    const existingSavedSchemes = auth.user?.savedSchemes ?? [];
     const nextUser = { ...auth.user, ...updates };
+
+    if (updates.savedSchemes === undefined) {
+      nextUser.savedSchemes = existingSavedSchemes;
+    }
+
     localStorage.setItem("user", JSON.stringify(nextUser));
     setAuth((prev) => ({ ...prev, user: nextUser }));
+  };
+
+  const saveScheme = async (scheme) => {
+    if (!auth.token) return;
+
+    const existingSavedSchemes = auth.user?.savedSchemes ?? [];
+    const schemeAlreadySaved = existingSavedSchemes.some(
+      (item) => item.id === scheme.id
+    );
+
+    const nextSavedSchemes = schemeAlreadySaved
+      ? existingSavedSchemes.filter((item) => item.id !== scheme.id)
+      : [...existingSavedSchemes, scheme];
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify({ savedSchemes: nextSavedSchemes }),
+        }
+      );
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data = await response.json();
+      updateUser(data.user);
+    } catch (error) {
+      console.error("Failed to save scheme:", error);
+    }
   };
 
   const logout = () => {
@@ -40,7 +88,14 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ auth, isAuthenticated: !!auth.token, login, updateUser, logout }}
+      value={{
+        auth,
+        isAuthenticated: !!auth.token,
+        login,
+        updateUser,
+        logout,
+        saveScheme,
+      }}
     >
       {children}
     </AuthContext.Provider>

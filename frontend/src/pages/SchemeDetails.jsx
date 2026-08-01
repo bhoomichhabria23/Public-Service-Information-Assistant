@@ -10,7 +10,11 @@ import {
 } from "react-icons/fa";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import AuthContext from "../context/AuthContext";
+<<<<<<< HEAD
 // import schemes from "../data/schemesData";
+=======
+import schemes from "../data/schemesData";
+>>>>>>> 4d36773 (my part done)
 
 function SchemeDetails() {
   const { auth, saveScheme } = useContext(AuthContext);
