@@ -10,7 +10,9 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Schemes from "./pages/Schemes";
+import SchemeDetails from "./pages/SchemeDetails";
 import Eligibility from "./pages/Eligibility";
+import EligibilityResult from "./pages/EligibilityResult";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -52,12 +54,21 @@ function App() {
           />
 
           <Route path="/schemes" element={<Schemes />} />
+          <Route path="/schemes/:schemeId" element={<SchemeDetails />} />
 
           <Route
             path="/eligibility"
             element={
               <ProtectedRoute>
                 <Eligibility />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/eligibility/result"
+            element={
+              <ProtectedRoute>
+                <EligibilityResult />
               </ProtectedRoute>
             }
           />

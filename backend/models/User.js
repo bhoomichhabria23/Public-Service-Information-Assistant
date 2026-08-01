@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema(
     state: {
       type: String,
     },
+
+    savedSchemes: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
   },
   {
     timestamps: true,
