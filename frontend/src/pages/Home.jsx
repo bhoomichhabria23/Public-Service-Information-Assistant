@@ -1,16 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Home() {
   const navigate = useNavigate();
 
   const schemes = [
-    { title: "Pradhan Mantri Awas Yojana", desc: "Affordable housing support for eligible families.", icon: "🏠" },
-    { title: "Ayushman Bharat Yojana", desc: "Health coverage up to ₹5 lakh per family.", icon: "🏥" },
-    { title: "PM Kisan Samman Nidhi", desc: "Income support of ₹6,000 per year to farmers.", icon: "🌾" },
-    { title: "National Scholarship Portal", desc: "Scholarships for students across India.", icon: "🎓" },
-    { title: "Pradhan Mantri Ujjwala Yojana", desc: "Clean cooking fuel for BPL families.", icon: "🔥" },
-    { title: "PM Internship Scheme", desc: "Internship opportunities for youth.", icon: "💼" },
+    { id: 2, title: "Pradhan Mantri Awas Yojana", category: "Housing", desc: "Affordable housing support for eligible families.", icon: "🏠" },
+    { id: 3, title: "Ayushman Bharat Yojana", category: "Health", desc: "Offers cashless health insurance up to ₹5 lakh per family.", icon: "🏥" },
+    { id: 1, title: "PM Kisan Samman Nidhi", category: "Agriculture", desc: "Income support of ₹6,000 per year to farmers.", icon: "🌾" },
+    { id: 6, title: "National Scholarship Portal", category: "Education", desc: "Scholarships for eligible students across India.", icon: "🎓" },
+    { id: 11, title: "Pradhan Mantri Ujjwala Yojana", category: "Energy", desc: "Provides free LPG connections to eligible households.", icon: "🔥" },
+    { id: 9, title: "PM Internship Scheme", category: "Employment", desc: "Offers internship opportunities to youth.", icon: "💼" },
   ];
+
+  const [query, setQuery] = useState("");
+
+  const handleSearch = () => {
+    const q = query.trim();
+    if (q) navigate(`/schemes?q=${encodeURIComponent(q)}`);
+    else navigate("/schemes");
+  };
 
   return (
     <div>
@@ -35,8 +44,15 @@ function Home() {
           </p>
 
           <div className="mt-10 max-w-2xl mx-auto flex bg-white rounded-xl overflow-hidden shadow-2xl">
-            <input type="text" placeholder="Search government schemes..." className="flex-1 px-6 py-4 text-gray-700 outline-none" />
-            <button className="bg-blue-900 text-white px-10 font-semibold">Search</button>
+            <input
+              type="text"
+              placeholder="Search government schemes..."
+              className="flex-1 px-6 py-4 text-gray-700 outline-none"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            />
+            <button onClick={handleSearch} className="bg-blue-900 text-white px-10 font-semibold">Search</button>
           </div>
 
           <div className="flex justify-center gap-5 mt-10">
@@ -86,11 +102,12 @@ function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
             {schemes.map((scheme, index) => (
-              <div key={index} className="bg-white border border-gray-200 rounded-2xl p-6 text-center h-77.5 flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all">
+              <div key={index} className="bg-white border border-gray-200 rounded-2xl p-6 text-center min-h-[320px] flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all">
                 <div className="text-5xl h-16">{scheme.icon}</div>
-                <h3 className="mt-4 font-bold text-blue-900 text-base leading-snug h-13.75 flex items-center">{scheme.title}</h3>
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed h-13.75">{scheme.desc}</p>
-                <button onClick={() => navigate('/schemes')} className="mt-auto border border-blue-900 text-blue-900 px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-900 hover:text-white transition">View Details</button>
+                <h3 className="mt-4 font-bold text-blue-900 text-base leading-snug min-h-[50px] flex items-center">{scheme.title}</h3>
+                <p className="mt-2 text-blue-600 text-sm font-medium">{scheme.category}</p>
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed min-h-[60px]">{scheme.desc}</p>
+                <button onClick={() => navigate(`/schemes/${scheme.id}`)} className="mt-auto border border-blue-900 text-blue-900 px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-900 hover:text-white transition">View Details</button>
               </div>
             ))}
           </div>
