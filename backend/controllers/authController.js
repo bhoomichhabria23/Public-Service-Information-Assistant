@@ -32,6 +32,7 @@ exports.register = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 state: user.state,
+                savedSchemes: user.savedSchemes || [],
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt
             }
@@ -79,6 +80,7 @@ exports.login = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 state: user.state,
+                savedSchemes: user.savedSchemes || [],
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt
             }
@@ -102,6 +104,7 @@ exports.getProfile = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 state: user.state,
+                savedSchemes: user.savedSchemes || [],
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt
             }
@@ -113,12 +116,16 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { name, phone, state } = req.body;
+        const { name, phone, state, savedSchemes } = req.body;
         const user = req.user;
 
         user.name = name || user.name;
         user.phone = phone || user.phone;
         user.state = state || user.state;
+
+        if (Array.isArray(savedSchemes)) {
+            user.savedSchemes = savedSchemes;
+        }
 
         await user.save();
 
@@ -130,6 +137,7 @@ exports.updateProfile = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 state: user.state,
+                savedSchemes: user.savedSchemes || [],
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt
             }

@@ -6,8 +6,13 @@ const connectDB = require("./config.js/db");
 dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
+<<<<<<< HEAD
 const contactRoutes = require("./routes/contactRoutes");
 // console.log(contactRoutes);
+=======
+const eligibilityRoutes = require("./routes/eligibilityRoutes");
+
+>>>>>>> 4d36773 (my part done)
 const app = express();
 
 app.use(cors());
@@ -20,7 +25,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+<<<<<<< HEAD
 app.use("/api/contact", contactRoutes);
+=======
+app.use("/api/eligibility", eligibilityRoutes);
+>>>>>>> 4d36773 (my part done)
 
 const PORT = process.env.PORT || 5000;
 

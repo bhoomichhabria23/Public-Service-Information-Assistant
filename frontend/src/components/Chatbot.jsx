@@ -101,6 +101,8 @@ function Chatbot() {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+
     // auto-start chat when navigated with state or query param
     const params = new URLSearchParams(window.location.search);
     const auto = location.state?.autoStart || params.get("autoStart") === "true";
