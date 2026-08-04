@@ -6,7 +6,8 @@ const connectDB = require("./config.js/db");
 dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
-
+const contactRoutes = require("./routes/contactRoutes");
+// console.log(contactRoutes);
 const app = express();
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 

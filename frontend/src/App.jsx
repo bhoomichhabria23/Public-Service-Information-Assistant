@@ -16,6 +16,8 @@ import Chatbot from "./components/Chatbot";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
+import SchemeDetails from "./pages/SchemeDetails";
+
 function App() {
   return (
     <AuthProvider>
@@ -32,6 +34,9 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route path="/register" element={<Register />} />
+
+          <Route path="/scheme-details" element={<SchemeDetails />} />
+          
 
           <Route
             path="/dashboard"
