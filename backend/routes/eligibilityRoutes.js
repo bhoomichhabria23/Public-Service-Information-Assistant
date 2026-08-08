@@ -28,7 +28,6 @@ router.post("/", async (req, res) => {
           submittedBy = user._id;
         }
       } catch (err) {
-        // Ignore invalid token and save without submittedBy
       }
     }
 

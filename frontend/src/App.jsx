@@ -17,7 +17,7 @@ import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-
+// import DocumentChecklist from "./pages/Documentchecklist";
 function App() {
   return (
     <AuthProvider>
@@ -81,6 +81,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
         </Routes>
         <Footer />
       </BrowserRouter>
