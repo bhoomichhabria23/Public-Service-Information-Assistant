@@ -30,7 +30,7 @@ function EligibilityResult() {
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-6">
       <div className="mx-auto max-w-5xl space-y-8">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="rounded-4xl border border-slate-200 bg-white p-8 shadow-xl">
           <button
             onClick={() =>
               navigate("/eligibility", {
@@ -63,7 +63,7 @@ function EligibilityResult() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className={`mt-6 grid gap-4 ${evaluation.eligible ? "sm:grid-cols-2" : "grid-cols-1"}`}>
             <div className="rounded-3xl bg-white p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-slate-900">
                 {evaluation.eligible ? "Why you are eligible" : "Why you are not eligible"}
@@ -88,29 +88,28 @@ function EligibilityResult() {
                 ))}
               </div>
             </div>
-            <div className="rounded-3xl bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900">Next steps</h3>
-              <p className="mt-4 text-slate-700 leading-7">
-                {evaluation.eligible
-                  ? "Gather your documents and follow the scheme guide to apply with confidence."
-                  : "If this scheme doesn't match your current profile, review other schemes that may be a better fit."
-                }
-              </p>
-              <div className="mt-6 space-y-3">
-                <button
-                  onClick={() => navigate(`/schemes/${selectedScheme.id}#documents`)}
-                  className="w-full rounded-2xl bg-sky-600 px-5 py-3 text-white shadow-sm hover:bg-sky-700"
-                >
-                  View required documents
-                </button>
-                <button
-                  onClick={() => window.open(selectedScheme.website, "_blank", "noreferrer")}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:bg-slate-50"
-                >
-                  Apply Scheme
-                </button>
+            {evaluation.eligible && (
+              <div className="rounded-3xl bg-white p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-900">Next steps</h3>
+                <p className="mt-4 text-slate-700 leading-7">
+                  Gather your documents and follow the scheme guide to apply with confidence.
+                </p>
+                <div className="mt-6 space-y-3">
+                  <button
+                    onClick={() => navigate(`/schemes/${selectedScheme.id}#documents`)}
+                    className="w-full rounded-2xl bg-sky-600 px-5 py-3 text-white shadow-sm hover:bg-sky-700"
+                  >
+                    View required documents
+                  </button>
+                  <button
+                    onClick={() => window.open(selectedScheme.website, "_blank", "noreferrer")}
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm hover:bg-slate-50"
+                  >
+                    Apply Scheme
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import AuthContext from "../context/AuthContext";
+import schemes from "../data/schemesData";
 
 function Schemes() {
   const [search, setSearch] = useState("");
@@ -23,129 +24,6 @@ function Schemes() {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
-  const schemes = [
-    {
-      id: 1,
-      name: "PM Kisan Samman Nidhi",
-      category: "Agriculture",
-      desc: "Income support of ₹6,000 per year to farmers",
-      icon: "🌾",
-      location: "All India",
-    },
-    {
-      id: 2,
-      name: "Pradhan Mantri Awas Yojana",
-      category: "Housing",
-      desc: "Affordable housing support for eligible families.",
-      icon: "🏠",
-      location: "All India",
-    },
-    {
-      id: 3,
-      name: "Ayushman Bharat Yojana",
-      category: "Healthcare",
-      desc: "Offers cashless health insurance up to ₹5 lakh per family.",
-      icon: "🏥",
-      location: "All India",
-    },
-    {
-      id: 4,
-      name: "Sukanya Samriddhi Yojana",
-      category: "Finance",
-      desc: "Savings scheme for education and marriage of girl child.",
-      icon: "👧",
-      location: "All India",
-    },
-    {
-      id: 5,
-      name: "Pradhan Mantri Mudra Loan",
-      category: "Finance",
-      desc: "Collateral-free loans for small businesses.",
-      icon: "💰",
-      location: "All India",
-    },
-    {
-      id: 6,
-      name: "National Scholarship Portal",
-      category: "Education",
-      desc: "Scholarships for eligible students across India",
-      icon: "🎓",
-      location: "All India",
-    },
-    {
-      id: 7,
-      name: "Pradhan Mantri Vishwakarma",
-      category: "Skill Development",
-      desc: "Supports artisans with training, tools, and financial assistance.",
-      icon: "🛠️",
-      location: "All India",
-    },
-    {
-      id: 8,
-      name: "Atal Pension Yojana",
-      category: "Finance",
-      desc: "Provides guaranteed monthly pension after retirement.",
-      icon: "👴",
-      location: "All India",
-    },
-    {
-      id: 9,
-      name: "PM Internship Scheme",
-      category: "Employment",
-      desc: "Offers internship opportunities to youth.",
-      icon: "💼",
-      location: "All India",
-    },
-    {
-      id: 10,
-      name: "Skill India Mission",
-      category: "Skill Development",
-      desc: "Provides skill training and certification for better employment.",
-      icon: "🎯",
-      location: "All India",
-    },
-    {
-      id: 11,
-      name: "Pradhan Mantri Ujjwala Yojana",
-      category: "Energy",
-      desc: "Provides free LPG connections to eligible households.",
-      icon: "🔥",
-      location: "All India",
-    },
-    {
-      id: 12,
-      name: "Beti Bachao Beti Padhao",
-      category: "Women & Child",
-      desc: "Promotes education and welfare of girl children.",
-      icon: "👩‍🎓",
-      location: "All India",
-    },
-    {
-      id: 13,
-      name: "Pradhan Mantri Jan Dhan Yojana",
-      category: "Banking",
-      desc: "Provides access to banking and financial services.",
-      icon: "🏦",
-      location: "All India",
-    },
-    {
-      id: 14,
-      name: "PM Surya Ghar: Muft Bijli Yojana",
-      category: "Energy",
-      desc: "Promotes rooftop solar for households.",
-      icon: "☀️",
-      location: "All India",
-    },
-    {
-      id: 15,
-      name: "Pradhan Mantri Suraksha Bima Yojana",
-      category: "Insurance",
-      desc: "Provides affordable accident insurance for eligible citizens.",
-      icon: "🚑",
-      location: "All India",
-    }, 
-  ];
-
   const navigate = useNavigate();
   const { auth, saveScheme } = useContext(AuthContext);
   const savedSchemeIds = new Set(
@@ -156,19 +34,23 @@ function Schemes() {
     scheme.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleBookmark = (scheme) => {
+  const handleBookmark = async (scheme) => {
     if (!auth?.token) {
       setNotice("Please log in to save schemes.");
       return;
     }
 
-    saveScheme(scheme);
+    const result = await saveScheme(scheme);
 
-    setNotice(
-      savedSchemeIds.has(scheme.id)
-        ? `${scheme.name} removed from saved schemes.`
-        : `${scheme.name} saved!`
-    );
+    if (result?.ok) {
+      setNotice(
+        savedSchemeIds.has(scheme.id)
+          ? `${scheme.name} removed from saved schemes.`
+          : `${scheme.name} saved!`
+      );
+    } else {
+      setNotice(result?.message || "Unable to save this scheme.");
+    }
 
     window.setTimeout(() => setNotice(""), 2500);
   };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {
   FaRobot,
@@ -9,61 +9,169 @@ import {
   FaTrash,
 } from "react-icons/fa";
 
+const CHAT_STORAGE_KEY = "psia-chatbot-chats";
+const ACTIVE_CHAT_STORAGE_KEY = "psia-chatbot-active-chat";
+
+const initialChats = [
+  {
+    id: 1,
+    title: "Scholarship Schemes",
+    messages: [
+      {
+        sender: "ai",
+        text: "Hello 👋 I am your Government AI Assistant. How can I help you today?",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "PM Kisan Eligibility",
+    messages: [],
+  },
+  {
+    id: 3,
+    title: "Housing Schemes",
+    messages: [],
+  },
+];
+
+function generateConversationTitle(message) {
+  const cleaned = String(message || "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!cleaned) {
+    return "New Conversation";
+  }
+
+  const words = cleaned.split(" ");
+  const title = words.slice(0, 5).join(" ");
+
+  if (title.length > 34) {
+    return `${title.slice(0, 34).trim()}...`;
+  }
+
+  return title;
+}
+
+function readStoredChats() {
+  if (typeof window === "undefined") {
+    return initialChats;
+  }
+
+  try {
+    const storedChats = window.localStorage.getItem(CHAT_STORAGE_KEY);
+    const parsedChats = storedChats ? JSON.parse(storedChats) : null;
+
+    return Array.isArray(parsedChats) && parsedChats.length > 0 ? parsedChats : initialChats;
+  } catch {
+    return initialChats;
+  }
+}
+
+function readStoredActiveChat() {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  const storedIndex = Number(window.localStorage.getItem(ACTIVE_CHAT_STORAGE_KEY));
+  return Number.isInteger(storedIndex) && storedIndex >= 0 ? storedIndex : 0;
+}
+
 function Chatbot() {
-  const [chats, setChats] = useState([
-    {
-      id: 1,
-      title: "Scholarship Schemes",
-      messages: [
-        {
-          sender: "ai",
-          text: "Hello 👋 I am your Government AI Assistant. How can I help you today?",
-        },
-      ],
-    },
-
-    {
-      id: 2,
-      title: "PM Kisan Eligibility",
-      messages: [],
-    },
-
-    {
-      id: 3,
-      title: "Housing Schemes",
-      messages: [],
-    },
-  ]);
-
-  const [activeChat, setActiveChat] = useState(0);
+  const requestInFlightRef = useRef(false);
+  const autoStartHandledRef = useRef(false);
+  const [chats, setChats] = useState(() => readStoredChats());
+  const [activeChat, setActiveChat] = useState(() => readStoredActiveChat());
 
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chats));
+    window.localStorage.setItem(ACTIVE_CHAT_STORAGE_KEY, String(activeChat));
+  }, [chats, activeChat]);
 
   // Send Message
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim() || requestInFlightRef.current) return;
 
-    const updatedChats = [...chats];
+    const userMessage = input.trim();
+    requestInFlightRef.current = true;
 
-    updatedChats[activeChat].messages.push(
-      {
-        sender: "user",
-        text: input,
-      },
+    setChats((prevChats) =>
+      prevChats.map((chat, index) => {
+        if (index !== activeChat) {
+          return chat;
+        }
 
-      {
-        sender: "ai",
-        text: "I will analyze your request and provide suitable government scheme information.",
-      },
+        const hasExistingUserMessages = chat.messages.some((message) => message.sender === "user");
+
+        return {
+          ...chat,
+          title: hasExistingUserMessages ? chat.title : generateConversationTitle(userMessage),
+          messages: [...chat.messages, { sender: "user", text: userMessage }],
+        };
+      })
     );
 
-    setChats(updatedChats);
-
     setInput("");
-  };
+    setIsLoading(true);
 
-  // Create New Chat
+    try {
+      const response = await fetch("http://localhost:5000/api/chatbot/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Unable to get a response.");
+      }
+
+      const aiReply = data.reply || "I’m sorry, I couldn’t generate a response.";
+
+      setChats((prevChats) =>
+        prevChats.map((chat, index) =>
+          index === activeChat
+            ? {
+                ...chat,
+                messages: [...chat.messages, { sender: "ai", text: aiReply }],
+              }
+            : chat
+        )
+      );
+    } catch (error) {
+      setChats((prevChats) =>
+        prevChats.map((chat, index) =>
+          index === activeChat
+            ? {
+                ...chat,
+                messages: [
+                  ...chat.messages,
+                  {
+                    sender: "ai",
+                    text: error.message || "Something went wrong. Please try again.",
+                  },
+                ],
+              }
+            : chat
+        )
+      );
+    } finally {
+      setIsLoading(false);
+      requestInFlightRef.current = false;
+    }
+  };
 
   const location = useLocation();
 
@@ -88,8 +196,6 @@ function Chatbot() {
     });
   };
 
-  // Delete Chat
-
   const deleteChat = (index) => {
     const updatedChats = chats.filter((_, chatIndex) => chatIndex !== index);
 
@@ -97,6 +203,8 @@ function Chatbot() {
 
     if (activeChat === index) {
       setActiveChat(0);
+    } else if (activeChat > index) {
+      setActiveChat((current) => Math.max(current - 1, 0));
     }
   };
 
@@ -107,10 +215,11 @@ function Chatbot() {
     const params = new URLSearchParams(window.location.search);
     const auto = location.state?.autoStart || params.get("autoStart") === "true";
 
-    if (auto) {
+    if (auto && !autoStartHandledRef.current) {
+      autoStartHandledRef.current = true;
       createNewChat();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   return (
@@ -132,7 +241,6 @@ function Chatbot() {
       flex-col
       "
       >
-        {/* Logo */}
 
         <div
           className="
@@ -160,8 +268,6 @@ function Chatbot() {
             Information Assistant
           </p>
         </div>
-
-        {/* Chat History */}
 
         <div
           className="
@@ -267,8 +373,6 @@ function Chatbot() {
         </div>
       </aside>
 
-      {/* MAIN CHAT AREA */}
-
       <main
         className="
       flex-1
@@ -276,7 +380,6 @@ function Chatbot() {
       flex-col
       "
       >
-        {/* Header */}
 
         <div
           className="
@@ -327,8 +430,6 @@ function Chatbot() {
           </div>
         </div>
 
-        {/* Messages */}
-
         <div
           className="
         flex-1
@@ -376,11 +477,22 @@ function Chatbot() {
                     <FaUser className="mt-1" />
                   )}
 
-                  <p>{message.text}</p>
+                  <p className="whitespace-pre-line">{message.text}</p>
                 </div>
               </div>
             </div>
           ))}
+
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="max-w-xl px-5 py-4 rounded-2xl shadow bg-white text-gray-800">
+                <div className="flex gap-3 items-start">
+                  <FaRobot className="mt-1" />
+                  <p>Thinking...</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Input */}
@@ -415,6 +527,7 @@ function Chatbot() {
 
           <button
             onClick={sendMessage}
+            disabled={isLoading}
             className="
           bg-blue-900
           text-white
@@ -423,10 +536,11 @@ function Chatbot() {
           flex
           items-center
           gap-2
+          disabled:opacity-60
           "
           >
             <FaPaperPlane />
-            Send
+            {isLoading ? "Sending..." : "Send"}
           </button>
         </div>
       </main>

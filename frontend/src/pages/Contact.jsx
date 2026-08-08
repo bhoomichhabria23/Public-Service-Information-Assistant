@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -9,6 +10,44 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Contact() {
+
+    const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: ""
+  });
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+
+      if (!res.ok || data.success === false) {
+        alert(data.message || "Failed to send message. Please try again.");
+        return;
+      }
+
+      alert(data.message || "Message sent successfully!");
+
+    } catch(error){
+      console.log(error);
+      alert("Network error: unable to send message.");
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <section
@@ -150,20 +189,54 @@ function Contact() {
               Send Us a Message
             </h2>
 
-            <form className="space-y-4">
-              <Input label="Full Name" placeholder="Enter your full name" />
-
+            {/* <form className="space-y-4"> */}
+            <form 
+            className="space-y-4" 
+            onSubmit={handleSubmit}
+            >
+              {/* <Input label="Full Name" placeholder="Enter your full name" /> */}
               <Input
+                label="Full Name"
+                name="name"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e)=>setFormData({...formData,name:e.target.value})}/>
+
+              {/* <Input
                 label="Email Address"
                 placeholder="Enter your email address"
-              />
+              /> */}
 
-              <Input
+            <Input 
+            label="Email Address"
+            name="email"
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={(e)=>setFormData({...formData,email:e.target.value})}
+            />
+
+
+              {/* <Input
                 label="Phone Number"
                 placeholder="Enter your phone number"
-              />
+              /> */}
+             <Input 
+             label="Phone Number"
+             name="phone"
+             placeholder="Enter your phone number"
+             value={formData.phone}
+             onChange={(e)=>setFormData({...formData,phone:e.target.value})}
+/> 
 
-              <Input label="Subject" placeholder="Enter subject" />
+
+              {/* <Input label="Subject" placeholder="Enter subject" /> */}
+              <Input
+              label="Subject"
+              name="subject"
+              placeholder="Enter subject"
+              value={formData.subject}
+              onChange={(e)=>setFormData({...formData,subject:e.target.value})}
+/>
 
               <div>
                 <label
@@ -177,7 +250,7 @@ function Contact() {
                   Message *
                 </label>
 
-                <textarea
+                {/* <textarea
                   rows="5"
                   placeholder="Type your message here..."
                   className="
@@ -189,22 +262,39 @@ function Contact() {
                     focus:ring-blue-500
                     outline-none
                   "
-                />
+                /> */}
+
+              <textarea
+              rows="5"
+              value={formData.message}
+              onChange={(e)=> setFormData({...formData,message:e.target.value})
+            }
+            className="
+            w-full
+            border
+            rounded-md
+            p-3
+            focus:ring-2
+            focus:ring-blue-500
+            outline-none
+            "
+            /> 
               </div>
 
               <button
-                className="
-                  w-full
-                  bg-blue-700
-                  text-white
-                  py-3
-                  rounded-md
-                  font-semibold
-                  hover:bg-blue-800
-                  flex
-                  justify-center
-                  gap-2
-                  items-center
+              type="submit"
+              className="
+                w-full
+                bg-blue-700
+                text-white
+                py-3
+                rounded-md
+                font-semibold
+                hover:bg-blue-800
+                flex
+                justify-center
+                gap-2
+                items-center
                 "
               >
                 <FontAwesomeIcon icon={faPaperPlane} />
@@ -268,7 +358,7 @@ function InfoCard({ icon, title, text }) {
   );
 }
 
-function Input({ label, placeholder }) {
+function Input({ label, placeholder, value, onChange}) {
   return (
     <div>
       <label
@@ -283,6 +373,8 @@ function Input({ label, placeholder }) {
       </label>
 
       <input
+        value={value}        //
+        onChange={onChange}   //
         placeholder={placeholder}
         className="
           w-full

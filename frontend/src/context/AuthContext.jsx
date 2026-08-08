@@ -33,7 +33,9 @@ export function AuthProvider({ children }) {
   };
 
   const saveScheme = async (scheme) => {
-    if (!auth.token) return;
+    if (!auth.token) {
+      return { ok: false, message: "Please log in to save schemes." };
+    }
 
     const existingSavedSchemes = auth.user?.savedSchemes ?? [];
     const schemeAlreadySaved = existingSavedSchemes.some(
@@ -58,13 +60,19 @@ export function AuthProvider({ children }) {
       );
 
       if (!response.ok) {
-        return;
+        const data = await response.json().catch(() => ({}));
+        return {
+          ok: false,
+          message: data.message || "Failed to save scheme.",
+        };
       }
 
       const data = await response.json();
       updateUser(data.user);
+      return { ok: true, message: "Scheme saved successfully." };
     } catch (error) {
       console.error("Failed to save scheme:", error);
+      return { ok: false, message: "Unable to save scheme right now." };
     }
   };
 

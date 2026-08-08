@@ -7,6 +7,8 @@ dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
 const eligibilityRoutes = require("./routes/eligibilityRoutes");
+const chatbotRoutes = require("./routes/chatbotRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/eligibility", eligibilityRoutes);
+app.use("/api/chatbot", chatbotRoutes);
+app.use("/api/contact", contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 

@@ -6,11 +6,20 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import AuthContext from "../context/AuthContext";
+import schemes from "../data/schemesData";
 
 function Dashboard() {
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const savedSchemes = auth?.user?.savedSchemes ?? [];
+  const getSchemeCategory = (scheme) => {
+    if (scheme?.category) {
+      return scheme.category;
+    }
+
+    const fallbackScheme = schemes.find((item) => item.id === scheme?.id);
+    return fallbackScheme?.category || "Unknown";
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -86,7 +95,7 @@ function Dashboard() {
                   <div className="flex items-center justify-between gap-3">
                     <div className="text-4xl">{scheme.icon}</div>
                     <span className="rounded-2xl bg-blue-50 px-3 py-2 text-blue-700 text-sm">
-                      {scheme.category}
+                      {getSchemeCategory(scheme)}
                     </span>
                   </div>
 
