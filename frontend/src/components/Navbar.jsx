@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 function Navbar() {
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navItems = [
     {
       name: "Home",
@@ -61,9 +62,11 @@ function Navbar() {
       <nav
         className="
         w-full
-        px-10
+        px-4
+        sm:px-10
         xl:px-20
-        py-4
+        py-3
+        sm:py-4
         flex
         items-center
         justify-between
@@ -74,13 +77,17 @@ function Navbar() {
           className="
           flex
           items-center
-          gap-3
+          gap-2
+          sm:gap-3
+          flex-shrink-0
           "
         >
           <div
             className="
-            w-14
-            h-14
+            w-10
+            sm:w-14
+            h-10
+            sm:h-14
             rounded-full
             bg-linear-to-br
             from-orange-500
@@ -91,15 +98,18 @@ function Navbar() {
             text-white
             font-extrabold
             shadow-md
+            text-xs
+            sm:text-base
             "
           >
             PSIA
           </div>
 
-          <div>
+          <div className="hidden sm:block">
             <h1
               className="
-              text-lg
+              text-base
+              sm:text-lg
               font-bold
               text-blue-950
               leading-tight
@@ -158,12 +168,30 @@ function Navbar() {
           className="
           flex
           gap-3
+          items-center
           "
         >
+          {/* Hamburger Menu Button - Mobile Only */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="
+            lg:hidden
+            flex
+            flex-col
+            gap-1.5
+            p-2
+            "
+            aria-label="Toggle menu"
+          >
+            <span className={`w-6 h-0.5 bg-blue-900 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-blue-900 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-blue-900 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          </button>
+
           {isAuthenticated ? (
             <button
               onClick={logout}
-              className="px-5 py-2 rounded-lg border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50 transition"
+              className="px-3 sm:px-5 py-2 text-sm sm:text-base rounded-lg border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50 transition"
             >
               Logout
             </button>
@@ -171,14 +199,14 @@ function Navbar() {
             <>
               <Link
                 to="/login"
-                className="px-5 py-2 rounded-lg border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50 transition"
+                className="px-3 sm:px-5 py-2 text-sm sm:text-base rounded-lg border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50 transition"
               >
                 Login
               </Link>
 
               <Link
                 to="/register"
-                className="px-5 py-2 rounded-lg bg-blue-900 text-white font-semibold hover:bg-blue-800 transition shadow-md"
+                className="px-3 sm:px-5 py-2 text-sm sm:text-base rounded-lg bg-blue-900 text-white font-semibold hover:bg-blue-800 transition shadow-md"
               >
                 Register
               </Link>
@@ -186,6 +214,38 @@ function Navbar() {
           )}
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white border-t border-gray-200">
+          <ul className="flex flex-col px-6 py-4 gap-4">
+            {navItems.map((item) => (
+              <li key={item.path}>
+                <NavLink
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `
+                    block
+                    font-medium
+                    transition
+                    duration-300
+                    py-2
+                    ${
+                      isActive
+                        ? "text-orange-600 font-semibold border-l-4 border-orange-500 pl-2"
+                        : "text-gray-700 hover:text-orange-500"
+                    }
+                    `
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div
         className="
