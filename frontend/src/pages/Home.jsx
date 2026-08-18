@@ -40,7 +40,7 @@ function Home() {
           </h1>
 
           <p className="mt-6 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-8">
-            Discover government schemes, check eligibility, understand required documents, and receive instant AI-powered guidance in multiple Indian languages.
+            Discover government schemes, check eligibility, understand required documents, and receive instant AI-powered guidance.
           </p>
 
           <div className="mt-10 max-w-2xl mx-auto flex bg-white rounded-xl overflow-hidden shadow-2xl">
