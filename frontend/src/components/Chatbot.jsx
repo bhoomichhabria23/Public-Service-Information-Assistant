@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import {
   FaRobot,
   FaUser,
@@ -19,19 +20,29 @@ const initialChats = [
     messages: [
       {
         sender: "ai",
-        text: "Hello 👋 I am your Government AI Assistant. How can I help you today?",
+        text: "👋 Welcome! I'm your AI guide to Indian government schemes. How can I help?",
       },
     ],
   },
   {
     id: 2,
     title: "PM Kisan Eligibility",
-    messages: [],
+    messages: [
+      {
+        sender: "ai",
+        text: "👋 Welcome! I'm your AI guide to Indian government schemes. How can I help?",
+      },
+    ],
   },
   {
     id: 3,
     title: "Housing Schemes",
-    messages: [],
+    messages: [
+      {
+        sender: "ai",
+        text: "👋 Welcome! I'm your AI guide to Indian government schemes. How can I help?",
+      },
+    ],
   },
 ];
 
@@ -184,7 +195,7 @@ function Chatbot() {
       messages: [
         {
           sender: "ai",
-          text: "Hello 👋 How can I help you with government services?",
+          text: "👋 Welcome! I'm your AI guide to Indian government schemes. How can I help?",
         },
       ],
     };
@@ -472,12 +483,45 @@ function Chatbot() {
                 "
                 >
                   {message.sender === "ai" ? (
-                    <FaRobot className="mt-1" />
+                    <FaRobot className="mt-1 flex-shrink-0" />
                   ) : (
-                    <FaUser className="mt-1" />
+                    <FaUser className="mt-1 flex-shrink-0" />
                   )}
 
-                  <p className="whitespace-pre-line">{message.text}</p>
+                  <div className="prose prose-sm max-w-none">
+                    {message.sender === "ai" ? (
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => <p className="mb-2 text-gray-800">{children}</p>,
+                          ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1 text-gray-800">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1 text-gray-800">{children}</ol>,
+                          li: ({ children }) => <li className="ml-2 text-gray-800">{children}</li>,
+                          strong: ({ children }) => <strong className="font-bold text-gray-900">{children}</strong>,
+                          em: ({ children }) => <em className="italic text-gray-800">{children}</em>,
+                          br: () => <br />,
+                          h1: ({ children }) => <h1 className="font-bold text-lg text-gray-900 mb-3 mt-3">{children}</h1>,
+                          h2: ({ children }) => <h2 className="font-bold text-base text-gray-900 mb-2 mt-3">{children}</h2>,
+                          h3: ({ children }) => <h3 className="font-bold text-base text-gray-900 mb-2 mt-3">{children}</h3>,
+                          h4: ({ children }) => <h4 className="font-semibold text-gray-900 mb-1 mt-2">{children}</h4>,
+                          table: ({ children }) => (
+                            <div className="overflow-x-auto mb-2">
+                              <table className="border-collapse border border-gray-300 text-sm">{children}</table>
+                            </div>
+                          ),
+                          thead: ({ children }) => <thead className="bg-gray-200">{children}</thead>,
+                          tbody: ({ children }) => <tbody>{children}</tbody>,
+                          tr: ({ children }) => <tr className="border border-gray-300">{children}</tr>,
+                          th: ({ children }) => <th className="border border-gray-300 px-3 py-2 font-bold text-left text-gray-900">{children}</th>,
+                          td: ({ children }) => <td className="border border-gray-300 px-3 py-2 text-gray-800">{children}</td>,
+                          code: ({ children }) => <code className="bg-gray-200 px-2 py-1 rounded text-gray-900 font-mono">{children}</code>,
+                        }}
+                      >
+                        {message.text}
+                      </ReactMarkdown>
+                    ) : (
+                      <p className="whitespace-pre-line">{message.text}</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
