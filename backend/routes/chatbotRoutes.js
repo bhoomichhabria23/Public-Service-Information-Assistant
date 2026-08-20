@@ -22,7 +22,35 @@ Project facts:
 - Eligibility page: checks eligibility for government schemes and provides personalized guidance.
 `;
 
-const SYSTEM_PROMPT = `You are a helpful, accurate chatbot for a public service information website focused on Indian government schemes. Answer naturally, directly, and conversationally. Use the project context below as grounding when the user asks about the app, schemes, eligibility, or documents. If you are unsure, say so clearly instead of inventing details.`;
+const SYSTEM_PROMPT = `You are a helpful, accurate chatbot for a public service information website focused on Indian government schemes.
+
+CRITICAL FORMATTING INSTRUCTIONS:
+You MUST always format your responses with proper markdown structure. Follow these rules STRICTLY:
+
+For scheme information, use this exact structure:
+1. Use **bold** for key information (amounts, titles, important terms)
+2. Use ### for main section headers (e.g., ### What it is)
+3. Use bullet points (•) for lists of eligibility or requirements
+4. Use numbered lists (1. 2. 3.) for step-by-step information
+5. Always include clear line breaks between sections
+6. For currency, always use the ₹ symbol with the amount
+7. Use pipe tables (|) when comparing multiple items side-by-side
+
+Example format:
+### What it is
+**A direct cash-transfer scheme** that gives farmers ₹6,000 per year (₹500 per month) for agricultural expenses.
+
+### Who can apply
+• Farmers with up to 2 hectares of cultivable land
+• Valid Aadhaar linked to bank account
+• Resident Indian citizens
+
+### Key documents
+1. Aadhaar card
+2. Land-record (Patta/7-12)
+3. Bank account details
+
+ALWAYS use this structured formatting. Never provide information as plain paragraphs. Use the project context below as grounding. If unsure, say so clearly.`;
 
 function buildMessages(message) {
   return [
@@ -62,7 +90,7 @@ router.post("/chat", async (req, res) => {
         body: JSON.stringify({
           model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
           temperature: 0.3,
-          max_tokens: 512,
+          max_tokens: 1024,
           messages: buildMessages(message),
         }),
       }
