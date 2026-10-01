@@ -9,6 +9,7 @@ import {
   FaPaperPlane,
   FaTrash,
 } from "react-icons/fa";
+import API_BASE_URL from "../config/api.js";
 
 const CHAT_STORAGE_KEY = "psia-chatbot-chats";
 const ACTIVE_CHAT_STORAGE_KEY = "psia-chatbot-active-chat";
@@ -135,7 +136,7 @@ function Chatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/chatbot/chat", {
+      const response = await fetch(`${API_BASE_URL}/chatbot/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

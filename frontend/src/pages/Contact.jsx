@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import API_BASE_URL from "../config/api.js";
 
 import {
   faLocationDot,
@@ -22,7 +23,7 @@ function Contact() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch(`${API_BASE_URL}/contact`, {
         method: "POST",
         headers:{
           "Content-Type":"application/json"

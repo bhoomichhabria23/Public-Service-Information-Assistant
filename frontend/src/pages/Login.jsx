@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import API_BASE_URL from "../config/api.js";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

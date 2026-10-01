@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import API_BASE_URL from "../config/api.js";
 
 const AuthContext = createContext(null);
 
@@ -48,7 +49,7 @@ export function AuthProvider({ children }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/profile",
+        `${API_BASE_URL}/auth/profile`,
         {
           method: "PUT",
           headers: {

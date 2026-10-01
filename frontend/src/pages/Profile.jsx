@@ -8,6 +8,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import AuthContext from "../context/AuthContext";
+import API_BASE_URL from "../config/api.js";
 
 function Profile() {
   const { auth, updateUser } = useContext(AuthContext);
@@ -33,7 +34,7 @@ function Profile() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/profile",
+          `${API_BASE_URL}/auth/profile`,
           {
             headers: {
               Authorization: `Bearer ${auth.token}`,
@@ -76,7 +77,7 @@ function Profile() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/profile",
+        `${API_BASE_URL}/auth/profile`,
         {
           method: "PUT",
           headers: {

@@ -2,6 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import schemes from "../data/schemesData";
 import AuthContext from "../context/AuthContext";
+import API_BASE_URL from "../config/api.js";
 
 function Eligibility() {
   const location = useLocation();
@@ -535,7 +536,7 @@ function Eligibility() {
     };
 
     try {
-      await fetch("http://localhost:5000/api/eligibility", {
+      await fetch(`${API_BASE_URL}/eligibility`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
