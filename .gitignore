@@ -33,6 +33,8 @@ backend/logs/
 
 # MongoDB local files
 data/
+!frontend/src/data/
+!frontend/src/data/**
 *.db
 
 # Temporary files
