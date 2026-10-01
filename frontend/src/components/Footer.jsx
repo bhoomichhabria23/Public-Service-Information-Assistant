@@ -6,7 +6,7 @@ import {
 function Footer() {
   return (
     <footer className="bg-slate-900 text-white mt-2">
-      <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
         <div>
           <h2 className="text-2xl font-bold text-orange-400">
             Public Service Information Assistant
@@ -94,13 +94,13 @@ function Footer() {
       </div>
 
       <div className="border-t border-slate-700">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-gray-400 text-sm">
           <p>
             © 2026 AI-Powered Public Service Information Assistant. All Rights
             Reserved.
           </p>
 
-          <div className="flex gap-6 mt-3 md:mt-0">
+          <div className="flex flex-wrap gap-x-5 gap-y-2 md:mt-0">
             <a href="#" className="hover:text-orange-400">
               Privacy Policy
             </a>

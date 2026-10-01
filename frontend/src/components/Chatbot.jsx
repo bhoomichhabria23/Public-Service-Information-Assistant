@@ -237,8 +237,11 @@ function Chatbot() {
   return (
     <div
       className="
-    h-[calc(100vh-80px)]
+    h-[calc(100dvh-72px)]
+    min-h-[520px]
     flex
+    flex-col
+    md:flex-row
     bg-gray-100
     "
     >
@@ -246,9 +249,15 @@ function Chatbot() {
 
       <aside
         className="
-      w-80
+      w-full
+      md:w-80
+      md:shrink-0
+      max-h-40
+      md:max-h-none
       bg-white
-      border-r
+      border-b
+      md:border-b-0
+      md:border-r
       flex
       flex-col
       "
@@ -256,13 +265,15 @@ function Chatbot() {
 
         <div
           className="
-        p-6
+        p-3
+        md:p-6
         border-b
         "
         >
           <h1
             className="
-          text-xl
+          text-base
+          md:text-xl
           font-bold
           text-blue-950
           "
@@ -272,6 +283,8 @@ function Chatbot() {
 
           <p
             className="
+          hidden
+          sm:block
           text-sm
           text-gray-500
           mt-1
@@ -284,7 +297,9 @@ function Chatbot() {
         <div
           className="
         flex-1
-        p-5
+        min-h-0
+        p-3
+        md:p-5
         overflow-y-auto
         "
         >
@@ -293,7 +308,8 @@ function Chatbot() {
           flex
           justify-between
           items-center
-          mb-5
+          mb-3
+          md:mb-5
           "
           >
             <h2
@@ -317,6 +333,7 @@ function Chatbot() {
             </button>
           </div>
 
+          <div className="flex gap-2 overflow-x-auto pb-1 md:block md:overflow-visible">
           {chats.length === 0 ? (
             <p
               className="
@@ -336,9 +353,14 @@ function Chatbot() {
                 flex
                 items-center
                 justify-between
-                p-4
+                min-w-44
+                md:min-w-0
+                md:w-full
+                p-3
+                md:p-4
                 rounded-xl
-                mb-3
+                mb-0
+                md:mb-3
                 transition
 
                 ${
@@ -356,6 +378,7 @@ function Chatbot() {
                   items-center
                   gap-3
                   flex-1
+                  min-w-0
                   cursor-pointer
                   "
                 >
@@ -364,6 +387,7 @@ function Chatbot() {
                   <span
                     className="
                     text-sm
+                    truncate
                     "
                   >
                     {chat.title}
@@ -382,12 +406,15 @@ function Chatbot() {
               </div>
             ))
           )}
+          </div>
         </div>
       </aside>
 
       <main
         className="
       flex-1
+      min-w-0
+      min-h-0
       flex
       flex-col
       "
@@ -397,8 +424,10 @@ function Chatbot() {
           className="
         bg-white
         border-b
-        px-8
-        py-5
+        px-4
+        sm:px-8
+        py-3
+        sm:py-5
         flex
         items-center
         gap-4
@@ -406,8 +435,10 @@ function Chatbot() {
         >
           <div
             className="
-          w-12
-          h-12
+          w-10
+          h-10
+          sm:w-12
+          sm:h-12
           rounded-full
           bg-blue-100
           flex
@@ -423,7 +454,8 @@ function Chatbot() {
           <div>
             <h2
               className="
-            text-2xl
+            text-lg
+            sm:text-2xl
             font-bold
             text-blue-950
             "
@@ -433,6 +465,8 @@ function Chatbot() {
 
             <p
               className="
+            hidden
+            sm:block
             text-sm
             text-gray-500
             "
@@ -445,8 +479,10 @@ function Chatbot() {
         <div
           className="
         flex-1
+        min-h-0
         overflow-y-auto
-        p-8
+        p-3
+        sm:p-8
         space-y-5
         "
         >
@@ -462,8 +498,11 @@ function Chatbot() {
             >
               <div
                 className={`
-              max-w-xl
-              px-5
+              max-w-[90%]
+              sm:max-w-xl
+              min-w-0
+              px-3
+              sm:px-5
               py-4
               rounded-2xl
               shadow
@@ -489,7 +528,7 @@ function Chatbot() {
                     <FaUser className="mt-1 flex-shrink-0" />
                   )}
 
-                  <div className="prose prose-sm max-w-none">
+                  <div className="prose prose-sm max-w-none min-w-0 [overflow-wrap:anywhere]">
                     {message.sender === "ai" ? (
                       <ReactMarkdown
                         components={{
@@ -530,7 +569,7 @@ function Chatbot() {
 
           {isLoading && (
             <div className="flex justify-start">
-              <div className="max-w-xl px-5 py-4 rounded-2xl shadow bg-white text-gray-800">
+              <div className="max-w-[90%] sm:max-w-xl px-3 sm:px-5 py-4 rounded-2xl shadow bg-white text-gray-800">
                 <div className="flex gap-3 items-start">
                   <FaRobot className="mt-1" />
                   <p>Thinking...</p>
@@ -546,9 +585,11 @@ function Chatbot() {
           className="
         bg-white
         border-t
-        p-5
+        p-3
+        sm:p-5
         flex
-        gap-4
+        gap-2
+        sm:gap-4
         "
         >
           <input
@@ -560,9 +601,11 @@ function Chatbot() {
             placeholder="Ask about government schemes..."
             className="
           flex-1
+          min-w-0
           border
           rounded-xl
-          px-5
+          px-3
+          sm:px-5
           py-3
           outline-none
           focus:ring-2
@@ -576,7 +619,8 @@ function Chatbot() {
             className="
           bg-blue-900
           text-white
-          px-7
+          px-4
+          sm:px-7
           rounded-xl
           flex
           items-center

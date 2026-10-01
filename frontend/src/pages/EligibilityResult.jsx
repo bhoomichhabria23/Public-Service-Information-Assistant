@@ -28,9 +28,9 @@ function EligibilityResult() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-6">
+    <div className="min-h-screen bg-slate-50 py-6 sm:py-10 px-3 sm:px-6">
       <div className="mx-auto max-w-5xl space-y-8">
-        <div className="rounded-4xl border border-slate-200 bg-white p-8 shadow-xl">
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 shadow-xl">
           <button
             onClick={() =>
               navigate("/eligibility", {
@@ -46,7 +46,7 @@ function EligibilityResult() {
             Back
           </button>
 
-          <div className={`mt-8 rounded-3xl border p-8 shadow-sm ${evaluation.eligible ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-white"}`}>
+          <div className={`mt-6 sm:mt-8 rounded-3xl border p-5 sm:p-8 shadow-sm ${evaluation.eligible ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-white"}`}>
             <div className="flex flex-col items-center gap-6 text-center">
               <div className={`mx-auto flex h-20 w-20 items-center justify-center rounded-full ${evaluation.eligible ? "bg-emerald-100" : "bg-rose-100 text-rose-700"}`}>
                 {evaluation.eligible ? <span className="text-4xl font-bold text-emerald-700 leading-none">✓</span> : "✕"}
@@ -55,7 +55,7 @@ function EligibilityResult() {
                 <p className={`text-2xl font-bold ${evaluation.eligible ? "text-emerald-700" : "text-rose-700"}`}>
                   {evaluation.eligible ? "Congratulations!" : "We're sorry."}
                 </p>
-                <p className="mt-3 text-xl font-semibold text-slate-900">
+                <p className="mt-3 text-lg sm:text-xl font-semibold text-slate-900">
                   {evaluation.title}
                 </p>
                 <p className="mt-2 text-slate-600">{evaluation.summary}</p>
@@ -64,7 +64,7 @@ function EligibilityResult() {
           </div>
 
           <div className={`mt-6 grid gap-4 ${evaluation.eligible ? "sm:grid-cols-2" : "grid-cols-1"}`}>
-            <div className="rounded-3xl bg-white p-6 shadow-sm">
+            <div className="rounded-3xl bg-white p-4 sm:p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-slate-900">
                 {evaluation.eligible ? "Why you are eligible" : "Why you are not eligible"}
               </h3>
@@ -89,7 +89,7 @@ function EligibilityResult() {
               </div>
             </div>
             {evaluation.eligible && (
-              <div className="rounded-3xl bg-white p-6 shadow-sm">
+              <div className="rounded-3xl bg-white p-4 sm:p-6 shadow-sm">
                 <h3 className="text-lg font-semibold text-slate-900">Next steps</h3>
                 <p className="mt-4 text-slate-700 leading-7">
                   Gather your documents and follow the scheme guide to apply with confidence.

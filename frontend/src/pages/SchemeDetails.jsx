@@ -59,7 +59,7 @@ function SchemeDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fbff] py-10 px-6">
+    <div className="min-h-screen bg-[#f8fbff] py-8 sm:py-10 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <button
@@ -70,14 +70,14 @@ function SchemeDetails() {
           </button>
         </div>
 
-        <div className="mt-8 rounded-[32px] bg-white p-10 shadow-xl border border-slate-200">
+        <div className="mt-6 sm:mt-8 rounded-3xl sm:rounded-[32px] bg-white p-5 sm:p-8 lg:p-10 shadow-xl border border-slate-200">
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             <div className="flex h-32 w-32 items-center justify-center rounded-[32px] bg-blue-50 text-5xl">
               {scheme.icon}
             </div>
 
             <div className="flex-1">
-              <h1 className="mt-4 text-4xl font-bold text-slate-900">
+              <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900">
                 {scheme.name}
               </h1>
               <p className="mt-4 text-lg leading-8 text-slate-600">
@@ -172,7 +172,7 @@ function SchemeDetails() {
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            <section className="rounded-3xl border border-blue-100 bg-blue-50 p-8 shadow-sm">
+            <section className="rounded-3xl border border-blue-100 bg-blue-50 p-5 sm:p-8 shadow-sm">
               <div className="flex items-center gap-3">
                 <FaCheckCircle className="text-blue-700" />
                 <h2 className="text-2xl font-semibold text-slate-900">Key Benefits</h2>
@@ -187,7 +187,7 @@ function SchemeDetails() {
               </ul>
             </section>
 
-            <section className="rounded-3xl border border-blue-100 bg-blue-50 p-8 shadow-sm">
+            <section className="rounded-3xl border border-blue-100 bg-blue-50 p-5 sm:p-8 shadow-sm">
               <div className="flex items-center gap-3">
                 <FaRegClock className="text-blue-700" />
                 <h2 className="text-2xl font-semibold text-slate-900">Eligibility Criteria</h2>
@@ -203,7 +203,7 @@ function SchemeDetails() {
             </section>
           </div>
 
-          <div ref={documentsRef} id="documents" className="mt-10 rounded-3xl border border-blue-100 bg-blue-50 p-8 shadow-sm">
+          <div ref={documentsRef} id="documents" className="mt-10 rounded-3xl border border-blue-100 bg-blue-50 p-5 sm:p-8 shadow-sm">
             <h2 className="text-2xl font-semibold text-slate-900">Documents Required</h2>
             <div className="mt-5 grid gap-3 md:grid-cols-2">
               {scheme.documents.map((doc) => (
@@ -214,7 +214,7 @@ function SchemeDetails() {
             </div>
           </div>
 
-          <div className="mt-10 rounded-3xl border border-blue-100 bg-blue-50 p-8 shadow-sm">
+          <div className="mt-10 rounded-3xl border border-blue-100 bg-blue-50 p-5 sm:p-8 shadow-sm">
             <h2 className="text-2xl font-semibold text-slate-900">How to Apply</h2>
             <p className="mt-4 text-slate-700 leading-8">{scheme.howToApply}</p>
 

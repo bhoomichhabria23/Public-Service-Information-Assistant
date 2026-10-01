@@ -141,9 +141,9 @@ function Profile() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="bg-linear-to-r from-blue-950 to-blue-700 text-white">
-        <div className="max-w-5xl mx-auto px-6 py-12 flex justify-between items-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-6">
           <div>
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-3xl sm:text-4xl font-bold break-words">
               Welcome Back, {user?.name || "Citizen"}
             </h1>
 
@@ -154,7 +154,7 @@ function Profile() {
 
           <button
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 bg-white text-blue-900 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition"
+            className="flex items-center justify-center gap-2 bg-white text-blue-900 px-5 sm:px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition w-full sm:w-auto"
           >
             <FaEdit />
             Edit Information
@@ -162,7 +162,7 @@ function Profile() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="grid md:grid-cols-3 gap-6">
           <div className="bg-white rounded-2xl shadow p-6 border">
             <p className="text-sm text-gray-500">
@@ -199,8 +199,8 @@ function Profile() {
           </div>
         </div>
 
-        <div className="mt-10 bg-white rounded-3xl shadow-lg border p-8">
-          <h2 className="text-2xl font-bold text-slate-900 mb-8">
+        <div className="mt-8 sm:mt-10 bg-white rounded-3xl shadow-lg border p-4 sm:p-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 sm:mb-8">
             Personal Information
           </h2>
 

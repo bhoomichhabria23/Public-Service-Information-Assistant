@@ -56,7 +56,7 @@ function Schemes() {
   };
 
   return (
-  <div className="min-h-screen bg-[#f8fbff] py-10 px-6">
+  <div className="min-h-screen bg-[#f8fbff] py-8 sm:py-10 px-4 sm:px-6">
     {notice && (
       <div className="fixed top-6 left-1/2 z-50 w-full max-w-xl -translate-x-1/2 px-4">
         <div className="rounded-3xl border border-blue-200 bg-blue-50 px-5 py-4 text-center text-blue-900 shadow-sm">
@@ -69,11 +69,11 @@ function Schemes() {
 
       {/* Heading */}
       <div className="text-center">
-        <h1 className="text-5xl font-bold text-[#0b2a69]">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0b2a69]">
           Government Schemes
         </h1>
 
-        <p className="text-gray-500 mt-3 text-lg">
+        <p className="text-gray-500 mt-3 text-base sm:text-lg">
           Explore government schemes across different categories
         </p>
 
@@ -154,16 +154,16 @@ function Schemes() {
 
       </div>
             {/* AI Assistant Section */}
-      <div className="mt-12 bg-white border border-blue-100 rounded-2xl shadow-sm p-8 flex flex-col md:flex-row justify-between items-center">
+      <div className="mt-12 bg-white border border-blue-100 rounded-2xl shadow-sm p-5 sm:p-8 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-5">
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-start sm:items-center gap-4 min-w-0">
 
           <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
             <FaRobot className="text-3xl text-blue-700" />
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-[#0b2a69]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#0b2a69]">
               Can't find what you're looking for?
             </h2>
 
@@ -176,7 +176,7 @@ function Schemes() {
 
         <button
           onClick={() => navigate('/chatbot', { state: { autoStart: true } })}
-          className="mt-6 md:mt-0 bg-[#0b2a69] hover:bg-blue-800 text-white px-8 py-3 rounded-xl font-semibold transition"
+          className="bg-[#0b2a69] hover:bg-blue-800 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold transition self-stretch md:self-auto"
         >
           Chat with AI Assistant
         </button>

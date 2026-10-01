@@ -23,18 +23,18 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         <div className="relative overflow-hidden rounded-3xl bg-white shadow-lg border border-slate-200">
           <div className="absolute right-0 top-0 h-full w-64 bg-blue-50 rounded-l-full opacity-70"></div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center p-10">
+          <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center p-5 sm:p-10">
             <div className="max-w-2xl">
               <p className="text-blue-700 font-semibold uppercase tracking-wider">
                 Dashboard
               </p>
 
-              <h1 className="text-4xl font-bold text-slate-900 mt-2">
+              <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 break-words">
                 Welcome Back,
                 <span className="text-blue-900"> {auth?.user?.name || "User"}</span>
               </h1>
@@ -49,10 +49,10 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="mt-10 bg-white rounded-3xl shadow-lg border border-slate-200 p-8 transition-all duration-300 hover:shadow-xl">
-          <div className="flex items-center justify-between mb-8">
+        <div className="mt-8 sm:mt-10 bg-white rounded-3xl shadow-lg border border-slate-200 p-4 sm:p-8 transition-all duration-300 hover:shadow-xl">
+          <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
                 Saved Schemes
               </h2>
 
@@ -192,8 +192,8 @@ function Dashboard() {
         </div>
 
         {/* FAQ */}
-        <div className="mt-10 bg-white rounded-3xl shadow-lg border border-slate-200 p-8">
-          <h2 className="text-3xl font-bold text-slate-900">
+          <div className="mt-10 bg-white rounded-3xl shadow-lg border border-slate-200 p-4 sm:p-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
             Frequently Asked Questions
           </h2>
 

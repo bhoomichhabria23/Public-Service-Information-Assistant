@@ -67,14 +67,14 @@ function Contact() {
         <div
           className="
             relative z-10
-            px-10 md:px-20
+            px-4 sm:px-8 md:px-20
             pt-12
             text-white
           "
         >
           <h1
             className="
-              text-4xl
+              text-3xl sm:text-4xl
               font-bold
             "
           >
@@ -98,8 +98,8 @@ function Contact() {
         className="
           max-w-6xl
           mx-auto
-          px-6
-          py-10
+          px-4 sm:px-6
+          py-8 sm:py-10
         "
       >
         <div
@@ -113,7 +113,7 @@ function Contact() {
               bg-white
               rounded-xl
               shadow-md
-              px-8
+              px-5 sm:px-8
               pt-8
               pb-12
               flex
@@ -145,7 +145,7 @@ function Contact() {
               bg-white
               rounded-xl
               shadow-md
-              p-8
+              p-5 sm:p-8
             "
           >
             <h2

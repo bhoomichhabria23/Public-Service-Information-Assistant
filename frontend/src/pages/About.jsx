@@ -3,7 +3,7 @@ function About() {
     <div>
       <section
         className="
-          py-24
+          py-12 md:py-24
           bg-linear-to-br
           from-slate-100
           via-blue-100
@@ -14,10 +14,10 @@ function About() {
           className="
             max-w-7xl
             mx-auto
-            px-8
+            px-4 sm:px-8
             grid
             lg:grid-cols-2
-            gap-20
+            gap-10 lg:gap-20
             items-center
           "
         >
@@ -39,9 +39,9 @@ function About() {
               src="https://plus.unsplash.com/premium_photo-1697730373168-254777738f53?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Z292ZXJubWVudCUyMHNjaGVtZXN8ZW58MHx8MHx8fDA%3D"
               className="
                 relative
-                rounded-[40px]
+                rounded-3xl sm:rounded-[40px]
                 shadow-2xl
-                h-130
+                h-72 sm:h-96 lg:h-130
                 w-full
                 object-cover
               "
@@ -63,7 +63,7 @@ function About() {
             <h1
               className="
                 mt-5
-                text-4xl
+                text-3xl sm:text-4xl
                 font-bold
                 text-gray-900
                 leading-tight
@@ -108,12 +108,12 @@ function About() {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div
           className="
             max-w-7xl
             mx-auto
-            px-8
+            px-4 sm:px-8
             grid
             lg:grid-cols-2
             gap-12
@@ -126,7 +126,7 @@ function About() {
               bg-linear-to-br
               from-blue-200
               to-green-200
-              p-12
+              p-6 sm:p-12
             "
           >
             <h2
@@ -158,7 +158,7 @@ function About() {
               bg-linear-to-br
               from-yellow-100
               to-pink-200
-              p-12
+              p-6 sm:p-12
             "
           >
             <h2
@@ -187,7 +187,7 @@ function About() {
 
       <section
         className="
-          py-24
+          py-12 md:py-24
           bg-linear-to-r
           from-blue-400
           via-blue-400

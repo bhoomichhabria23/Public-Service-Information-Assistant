@@ -558,20 +558,20 @@ function Eligibility() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-10">
-      <div className="max-w-6xl mx-auto px-6">
+    <div className="bg-slate-50 min-h-screen py-6 sm:py-10">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6">
         <div className="rounded-3xl overflow-hidden shadow-lg bg-white">
-          <div className="bg-linear-to-r from-sky-600 to-indigo-700 px-8 py-10 text-white">
-            <h2 className="text-3xl font-bold">Eligibility Checker</h2>
+          <div className="bg-linear-to-r from-sky-600 to-indigo-700 px-5 sm:px-8 py-7 sm:py-10 text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold">Eligibility Checker</h2>
             <p className="mt-3 text-sky-100 max-w-2xl">
               Select a scheme first, then provide your details to see a result for that program.
             </p>
           </div>
 
-          <div className="p-8">
+          <div className="p-3 sm:p-8">
             <div className="space-y-7">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                <h3 className="text-xl font-semibold mb-4">Step 1: Select a scheme</h3>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-4">Step 1: Select a scheme</h3>
                 <div className="grid gap-4 md:grid-cols-[1fr_auto] items-end">
                   <label className="block">
                     <span className="text-sm font-medium text-slate-700">Scheme</span>
@@ -616,8 +616,8 @@ function Eligibility() {
               </div>
 
               {step === 2 && selectedScheme && (
-                <form onSubmit={handleCheckEligibility} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <h3 className="text-xl font-semibold mb-5">Step 2: Enter your details</h3>
+                <form onSubmit={handleCheckEligibility} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-5">Step 2: Enter your details</h3>
 
                   <div className="grid gap-5 md:grid-cols-2">
                     <label className="block">

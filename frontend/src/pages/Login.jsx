@@ -54,8 +54,8 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-orange-100 via-white to-blue-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-6xl min-h-166 bg-white rounded-[35px] shadow-2xl overflow-hidden grid lg:grid-cols-2">
+    <div className="min-h-screen bg-linear-to-br from-orange-100 via-white to-blue-100 flex items-center justify-center p-3 sm:p-6">
+      <div className="w-full max-w-6xl min-h-166 bg-white rounded-3xl sm:rounded-[35px] shadow-2xl overflow-hidden grid lg:grid-cols-2">
         <div className="hidden lg:flex relative bg-linear-to-br from-orange-300 via-orange-200 to-blue-300 items-center justify-center p-10">
           <div className="absolute inset-0 bg-black/10"></div>
 
@@ -70,8 +70,8 @@ function Login() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-center px-14 py-12">
-          <h1 className="text-4xl text-center font-bold text-slate-800">
+        <div className="flex flex-col justify-center px-5 sm:px-10 lg:px-14 py-8 sm:py-12">
+          <h1 className="text-3xl sm:text-4xl text-center font-bold text-slate-800">
             Welcome Back!
           </h1>
 
@@ -113,7 +113,7 @@ function Login() {
               </button>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <label className="flex items-center gap-2 text-gray-600">
                 <input
                   type="checkbox"
