@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faLocationDot,
-  faPhone,
   faEnvelope,
   faClock,
   faPaperPlane,
@@ -113,47 +112,30 @@ function Contact() {
               bg-white
               rounded-xl
               shadow-md
-              p-8
+              px-8
+              pt-8
+              pb-12
+              flex
+              flex-col
+              justify-center
             "
           >
             <InfoCard
               icon={faLocationDot}
-              title="Office Address"
-              text={
-                <>
-                  Public Service Information Center
-                  <br />
-                  Government Service Building
-                  <br />
-                  New Delhi, India - 110001
-                </>
-              }
-            />
-
-            <InfoCard
-              icon={faPhone}
-              title="Phone (Toll-Free)"
-              text="+91 1800-123-4567"
+              title="Public Service Information Assistant"
+              text="Mumbai, Maharashtra, India"
             />
 
             <InfoCard
               icon={faEnvelope}
-              title="Email"
-              text="support@publicservice.gov.in"
+              title="Support"
+              text="For queries and assistance, please use the contact form available on this website."
             />
 
             <InfoCard
               icon={faClock}
-              title="Working Hours"
-              text={
-                <>
-                  Monday - Friday : 9:00 AM - 6:00 PM
-                  <br />
-                  Saturday : 10:00 AM - 2:00 PM
-                  <br />
-                  Sunday : Closed
-                </>
-              }
+              title="Availability"
+              text="Online 24/7"
             />
           </div>
 

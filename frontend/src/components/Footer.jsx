@@ -1,10 +1,5 @@
 import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
   FaEnvelope,
-  FaPhoneAlt,
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
@@ -80,19 +75,19 @@ function Footer() {
           <h3 className="text-xl font-semibold mb-5">Contact</h3>
 
           <div className="space-y-4 text-gray-300">
-            <div className="flex items-center gap-3">
+            <a href="/contact" className="flex items-start gap-3 hover:text-orange-400 transition">
               <FaEnvelope className="text-orange-400" />
-              support@publicserviceai.in
+              <span>For queries and assistance, please use the contact form available on this website.</span>
+            </a>
+
+            <div className="flex items-center gap-3">
+              <FaMapMarkerAlt className="text-orange-400 mt-1" />
+              Mumbai, Maharashtra, India
             </div>
 
             <div className="flex items-center gap-3">
-              <FaPhoneAlt className="text-orange-400" />
-              +91 98765 43210
-            </div>
-
-            <div className="flex items-start gap-3">
-              <FaMapMarkerAlt className="text-orange-400 mt-1" />
-              India
+              <span className="text-orange-400" aria-hidden="true">24/7</span>
+              Online 24/7
             </div>
           </div>
         </div>
